@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="Css/estilo.css">
+    <title>Tic tac toe</title>
 </head>
 <body>
-    <h1>Toc Tac Toe</h1>
-    <h2>Elije tu marca :D</h2>
+    <h1 id="titulo-principal">Toc Tac Toe</h1>
+    <h2 id="elige-marca">Elige tu marca :D</h2>
+    <form action="Js/juego.js">
+        <fieldset>
+          <input type="radio" name="Elecciones" id="jugador-1" value="X" />
+          <label for="jugador-1">X</label>
+          <input type="radio" name="Elecciones" id="jugador-2" value="O" />
+          <label for="jugador-2">O</label>
+        </fieldset>
+        <button id="resetear" class="btn btn-primary">Resetear</button>
+      </form>
+    <div id="tablero">
+        
+    </div>
 </body>
 </html>
