@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/GiulianaOlmos/tic-tac.toe-Giuliana-Olmos#readme",
   "dependencies": {
+    "ejs": "^3.0.1",
     "express": "^4.17.1"
   }
 }
