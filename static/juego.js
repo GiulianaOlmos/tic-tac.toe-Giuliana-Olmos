@@ -9,10 +9,23 @@ jugadores.forEach(function(choice){
 });
 
 function setearJugadores(){
-    jugador = this.value; //le seteamos el valor del input al cual se le hizo click
-    tituloDinamico.textContent = "Juegas con " + jugador;
-    formularioEligeJugador.style.display = "none";
-    crearTablero();
+  iniciarContador();
+  jugador = this.value; //le seteamos el valor del input al cual se le hizo click
+  tituloDinamico.textContent = "Juegas con " + jugador;
+  formularioEligeJugador.style.display = "none";
+  crearTablero();
+}
+
+function iniciarContador(){
+  var n = 0;
+  var timeTraking = document.getElementById("time-traking");
+  var timeTrakingid = window.setInterval(function(){
+    timeTraking.innerHTML = n;
+    n++;
+    if(esGanador()){
+      clearInterval(timeTrakingid)
+    }
+  },1000);
 }
 
 function crearTablero(){
@@ -29,10 +42,13 @@ function crearTablero(){
 function movimientoJugador(){
   if(this.textContent === ""){
     this.textContent = jugador;
+    if(esGanador()){
+      swal(" El ganador es "+ jugador);
+      return;
+    };
+    cambiarJugador();
+    movimientoComputadora()
   }
-  if(esGanador()){
-    swal(" El ganador es "+ jugador);
-  };
 }
 
 function esGanador(){
@@ -59,4 +75,40 @@ function esGanador(){
   }
   return ganador
 }
-    
+
+function cambiarJugador(){
+  if (jugador == 'X') {
+    jugador = 'O';
+  } else {
+    jugador = 'X';
+  }
+}
+
+//Para que juegue la computadora, vamos a crear un arreglo con todas las celdas que esten vacias. De esas celdas va a seleccionar una aleatoriamente para marcarla.
+function movimientoComputadora(){
+  casillasVacias = [];
+  casillas.forEach(function(casilla){
+    if(casilla.textContent === ""){
+      casillasVacias.push(casilla);
+    }
+  })
+
+  //Va a alegir un numero al azar el cual va a dar como resultado el indice del arreglo de las cassillas que estan vacias y va a completar con una marca.
+  var random = Math.ceil(Math.random() * casillasVacias.length) - 1;
+  casillasVacias[random].textContent = jugador;
+
+  if(esGanador()){
+    swal(" El ganador es "+ jugador);
+    return;
+  };
+  cambiarJugador();
+}
+
+var botonResetar = document.querySelector('#resetear')
+botonResetar.addEventListener('click', resetear, false);
+
+function resetear(){
+  casillas.forEach(function(casilla){
+    casilla.textContent = "";
+  })
+}
