@@ -4,11 +4,14 @@ var jugadorO = document.querySelector('.jugador-2');
 
 
 function startGame(){
-
+    if(elegirJugador()){
+        tituloDinamico.innerHTML ="Juegas con " +  elegirJugador();
+    }
 }
 
 function elegirJugador(){
     jugadorX.addEventListener('click', function(){return "X"});
     jugadorO.addEventListener('click', function(){return "O"})
 }
-console.log(elegirJugador)
+elegirJugador();
+console.log(elegirJugador())
