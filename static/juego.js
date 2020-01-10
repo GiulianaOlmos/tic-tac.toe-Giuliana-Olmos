@@ -1,11 +1,16 @@
 var tituloDinamico = document.querySelector('#titulo-idica-accion');
 var formularioEligeJugador = document.querySelector('#elige-jugador');
 var tablero = document.querySelector('#tablero');
+var estaPensando = false;
+var botonResetar = document.querySelector('#resetear')
 
 //Junto los dos inputs en un array para recorrerlos, y de esta forma condicionar el evento click.
 var jugadores = Array.prototype.slice.call(document.querySelectorAll('input[name=Elecciones]'));
 jugadores.forEach(function(choice){
   choice.addEventListener('click', setearJugadores, false);
+  tablero.style.display = "none";
+  botonResetar.style.display = "none";
+
 });
 
 function setearJugadores(){
@@ -13,6 +18,7 @@ function setearJugadores(){
   jugador = this.value; //le seteamos el valor del input al cual se le hizo click
   tituloDinamico.textContent = "Juegas con " + jugador;
   formularioEligeJugador.style.display = "none";
+  botonResetar.style.display = "inline";
   crearTablero();
 }
 
@@ -29,6 +35,7 @@ function iniciarContador(){
 }
 
 function crearTablero(){
+  tablero.style.display = "flex"
   for(var i=0; i<9; i++){
     var casilla = document.createElement('div');
     casilla.id = "casilla"+i;
@@ -40,14 +47,16 @@ function crearTablero(){
 }
 
 function movimientoJugador(){
-  if(this.textContent === ""){
+  if(this.textContent === "" && !estaPensando){
     this.textContent = jugador;
     if(esGanador()){
       swal(" El ganador es "+ jugador);
       return;
     };
     cambiarJugador();
-    movimientoComputadora()
+    estaPensando = true;
+    setTimeout(movimientoComputadora, 1000);
+    estaPensando = false;
   }
 }
 
@@ -104,11 +113,14 @@ function movimientoComputadora(){
   cambiarJugador();
 }
 
-var botonResetar = document.querySelector('#resetear')
+
 botonResetar.addEventListener('click', resetear, false);
 
 function resetear(){
   casillas.forEach(function(casilla){
     casilla.textContent = "";
   })
+  tablero.style.display = "none";
+  tablero.innerHTML = "";
+  formularioEligeJugador.style.display = "";
 }
